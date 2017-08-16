@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TemplateCategory Name="Code Contracts">
+    <Template Name="[&lt;ca" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;ContractAbbreviator&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;cim" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;ContractInvariantMethod&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;cppn" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;ContractPublicPropertyName("«Field(,Enter property name)»")&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;pu" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;Pure&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="cim" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:[&lt;cim»
+let ObjectInvariant() = </Body>
+        <Context />
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+</Templates>

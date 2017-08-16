@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FsCheck" OptExpanded="true">
+  <Template Name="raises">
+    <Expansion Priority="0">
+      <Body>raises&lt;«Caret»«Field(exception)»«BlockAnchor»&gt; &lt;@ «Field» @&gt;«FinalTarget»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="test">
+    <Expansion Priority="0">
+      <Body>test &lt;@ «Caret»«Field»«BlockAnchor» @&gt;«FinalTarget»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+</XmlTemplateCategoryInfo>

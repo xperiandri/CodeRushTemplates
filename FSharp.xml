@@ -1,0 +1,4149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TemplateCategory Name="1-Key">
+    <Template Name="d" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:#Delegate#»</Body>
+        <Context>
+          <Selected>Editor\Line\OnEmptyLine</Selected>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="n" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>null</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+      <Expansion Priority="1">
+        <Body>null</Body>
+        <Context>
+          <Selected>Editor\Code\InCodeBlock</Selected>
+          <Excluded>Editor\Code\DeclaresLocal(n)</Excluded>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Line\AppearsToDeclare(n)</Excluded>
+        </Context>
+      </Expansion>
+      <Expansion Priority="2">
+        <Body>null</Body>
+        <Context>
+          <Selected>Editor\Code\InFieldInitializer</Selected>
+          <Selected>Editor\Line\InParens</Selected>
+        </Context>
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <TemplateCategory Name="Attributes">
+    <Template Name="[&lt;ac" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;AbstractClass&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;ao" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;AutoOpen&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;f" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;FlagsAttribute&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;pa" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;ParamArray&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="[&lt;rqa" CaseSensitiveName="false">
+      <Expansion Priority="0" SuppressLastChar="true">
+        <Body>[&lt;RequireQualifiedAccess&gt;]</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <TemplateCategory Name="Declarations" OptExpanded="true">
+    <TemplateCategory Name="Bindings" OptExpanded="true">
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#BindingRouter#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body />
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#BindRecord#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>let «BlockAnchor»«Field(RecordName)»«Caret» = { «FinalTarget» }</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#BindUnion#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>let «BlockAnchor»«Field(UnionName)»«Caret» = «Field(Constructor)» «Field(ValueExpression)»«FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ChangeRecord#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>let «BlockAnchor»«Field(RecordName)»«Caret» = { «FieldStart»«TypeLink(BaseRecord)»«FieldEnd» with «Field(field)» = «FinalTarget» }</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="do" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»do «BlockAnchor»«Field(Function)»«Caret» «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="lcr" CaseSensitiveName="false">
+        <Comment>New record based on other record</Comment>
+        <Expansion Priority="0">
+          <Body>«:#ChangeRecord#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="let" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»let «BlockAnchor»«Field(name)»«Caret» = «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="lr" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#BindRecord#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="lu" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#BindUnion#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="mut" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»let mutable «BlockAnchor»«Field(name)»«Caret» = «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Constructors/Destructors">
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#UnionConstructor#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret» of «?Get(Type)»«FinalTarget»</Body>
+            <Context>
+              <Selected>System\VariableMatches(IsTypeDefined,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret» of «Field(,Enter single parameter type or names with types)»«FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="cc" CaseSensitiveName="false">
+        <Comment>Class constructor</Comment>
+        <Expansion Priority="0">
+          <Body>new(«Field(,Enter parameters if necessary)»«Caret») =
+    «TypeName»«Marker»(«Target»)«FinalTarget»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dd" CaseSensitiveName="false">
+        <Comment>Class destructor</Comment>
+        <Expansion Priority="0">
+          <Body />
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="uc" CaseSensitiveName="false">
+        <Comment>Class constructor</Comment>
+        <Expansion Priority="0">
+          <Body>«:#UnionConstructor#»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="uc?Type?" CaseSensitiveName="false">
+        <Comment>Class constructor</Comment>
+        <Expansion Priority="0">
+          <Body>«:#UnionConstructor#(IsTypeDefined=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Events">
+      <TemplateCategory Name="Generic" OptExpanded="true">
+        <TemplateCategory Name="System" OptExpanded="true">
+          <Template Name="#EventDeclarationGeneric#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>«:#EventVarDeclarationGeneric#»
+«:#EventBody#»</Body>
+              <Context />
+            </Expansion>
+          </Template>
+          <Template Name="#EventVarDeclarationGeneric#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>let «:#EventVar#» = new Event&lt;«Field(MyEventArgs,Custom event arguments)»&gt;()</Body>
+              <Context />
+            </Expansion>
+          </Template>
+        </TemplateCategory>
+        <Template Name="ev." CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«:#EventDeclarationGeneric#»</Body>
+            <Context>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#Delegate#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyDelegate)» = delegate of «FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#EventBody#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>[&lt;CLIEvent&gt;]
+«:#MemberHeader#»«:#EventName#» = «Link(eventName)».Publish</Body>
+            <Context />
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>[&lt;CLIEvent&gt;]
+«:#MemberHeader#»«:#EventName#» = «Link(EventName,FormatFieldName,PropertyNameFromField)».Publish</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#EventDeclaration#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«:#EventVarDeclaration#»
+«:#EventBody#»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#EventVar#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«FieldStart»«Link(eventName)»«FieldEnd»</Body>
+            <Context />
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«FieldStart»«Link(EventName,FormatFieldName,PropertyNameFromField)»«FieldEnd»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#EventVarDeclaration#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>let «:#EventVar#» = new Event&lt;_&gt;()</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="ev" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#EventDeclaration#»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Exceptions">
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#ExceptionClass#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>exception «:#ExceptionNameSelected#» of string</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ExceptionClassWithField#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>exception «:#ExceptionNameSelected#» of «TypeLink("«?Get(Type)»")»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ExceptionNameSelected#" CaseSensitiveName="false">
+          <Comment>The name of the exception class to create.</Comment>
+          <Expansion Priority="0">
+            <Body>«Caret»«FieldStart(Exception name)»«Link(«?Get(ExceptionClass)»)»«BlockAnchor»Exception«FieldEnd»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ExClassClipRouter#" CaseSensitiveName="false">
+          <Comment>Sets a value for the ExceptionClass name variable and then calls #ExceptionClassWithField#.</Comment>
+          <Expansion Priority="0">
+            <Body>«?Set(ExceptionClass,«?Paste»)»«:#ExceptionClass#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\HasIdentifier</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«?Set(ExceptionClass,New)»«:#ExceptionClass#»</Body>
+            <Context>
+              <Excluded>Editor\Clipboard\HasIdentifier</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#ExClassWithFieldClipRouter#" CaseSensitiveName="false">
+          <Comment>Sets a value for the ExceptionClass name variable and then calls #ExceptionClassWithField#.</Comment>
+          <Expansion Priority="0">
+            <Body>«?Set(ExceptionClass,«?Paste»)»«:#ExceptionClassWithField#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\HasIdentifier</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«?Set(ExceptionClass,New)»«:#ExceptionClassWithField#»</Body>
+            <Context>
+              <Excluded>Editor\Clipboard\HasIdentifier</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="ex" CaseSensitiveName="false">
+        <Comment>Creates a new Exception class descendant.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#ExClassClipRouter#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="x?Type?" CaseSensitiveName="false">
+        <Comment>Creates a new Exception class descendant with a custom property of the specified type. The letters following the "ex" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#ExClassWithFieldClipRouter#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Methods">
+      <TemplateCategory Name="Misc" OptExpanded="true">
+        <Template Name="Main">
+          <Expansion Priority="0">
+            <Body>[&lt;EntryPoint&gt;]
+let main() = «FinalTarget»</Body>
+            <Context>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#MethodRouter#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«:#MemberHeader#»«:#MethodName#»«:#MethodSigntureAbstract#»</Body>
+            <Context>
+              <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«:#MemberHeader#»«:#MethodName#»«:#MethodSignture#»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="dm" CaseSensitiveName="false">
+        <Comment>Default method implementation.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm," CaseSensitiveName="false">
+        <Comment>Default parameterless method.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m,(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm." CaseSensitiveName="false">
+        <Comment>Default method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m.(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm.," CaseSensitiveName="false">
+        <Comment>Default parameterless method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m.,(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm?Type?" CaseSensitiveName="false">
+        <Comment>Declares a default implementation of method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m?Type?(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm?Type?," CaseSensitiveName="false">
+        <Comment>Declares a default implementation of parameterless method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m?Type?,(IsDefault=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dm?Type?+" CaseSensitiveName="false">
+        <Comment>Declares a default implementation of method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodVirtual#(IsTypeDeclared=true,IsInfered=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m" CaseSensitiveName="false">
+        <Comment>Method.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m.»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m-" CaseSensitiveName="false">
+        <Comment>Abstract method.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m.-»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m," CaseSensitiveName="false">
+        <Comment>Parameterless method.</Comment>
+        <Expansion Priority="0">
+          <Body>«:m.,»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m,-" CaseSensitiveName="false">
+        <Comment>Abstract parameterless method.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,«Field(,Enter output type)»)»«:#MethodRouter#(IsAbstract=true,IsParameterless=true)#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m-," CaseSensitiveName="false">
+        <Comment>Abstract parameterless method.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,«Field(,Enter output type)»)»«:#MethodRouter#(IsAbstract=true,IsParameterless=true)#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m." CaseSensitiveName="false">
+        <Comment>Method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsInfered=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m.-" CaseSensitiveName="false">
+        <Comment>Abstract method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,«Field(,Enter output type)»)»«:#MethodRouter#(IsAbstract=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m.," CaseSensitiveName="false">
+        <Comment>Parameterless method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsInfered=true,IsParameterless=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m:" CaseSensitiveName="false">
+        <Comment>Method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m:," CaseSensitiveName="false">
+        <Comment>Parameterless method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsParameterless=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m?Type?" CaseSensitiveName="false">
+        <Comment>Declares a method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsTypeDeclared=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m?Type?-" CaseSensitiveName="false">
+        <Comment>Declares an abstract method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsTypeDeclared=true,IsAbstract=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="m?Type?," CaseSensitiveName="false">
+        <Comment>Declares a parameterless method of the specified type. The letters following the "m" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+        <Expansion Priority="0">
+          <Body>«:#MethodRouter#(IsTypeDeclared=true,IsParameterless=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="mu" CaseSensitiveName="false">
+        <Comment>Method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,unit)»«:m?Type?»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="mu-" CaseSensitiveName="false">
+        <Comment>Abstract method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,unit)»«:m?Type?-»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="mu," CaseSensitiveName="false">
+        <Comment>Parameterless method without return value.</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(Type,unit)»«:m?Type?,»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Modifiers">
+      <Template Name="ab" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>abstract </Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+            <Excluded>Editor\Line\OnEmptyLine</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="pv" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>private </Body>
+          <Context>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="st" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:sta»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethodBlock</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InPropertyAccessor</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+            <Excluded>Editor\Line\OnEmptyLine</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="sta" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>static </Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InMethodBlock</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InPropertyAccessor</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+            <Excluded>Editor\Line\OnEmptyLine</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Polymorphism">
+      <Template Name="ii" CaseSensitiveName="false">
+        <Comment>Declares inheritance of iterface in the containing type.</Comment>
+        <Expansion Priority="0">
+          <Body>interface «Field(,Enter interface name)»«Caret» with«FinalTarget»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="inh" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>inherit «Field(,Enter base class name)»«Caret»()«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Properties">
+      <TemplateCategory Name="Auto" OptExpanded="true">
+        <TemplateCategory Name="Generics" OptExpanded="true">
+          <Template Name="a?Type?0" CaseSensitiveName="false">
+            <Comment>Declares a property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+            <Expansion Priority="0">
+              <Body>«:p?Type?0(AutoImplemented=true)»</Body>
+              <Context>
+                <Selected>Editor\Line\OnEmptyLine</Selected>
+                <Excluded>Editor\Code\InComment</Excluded>
+                <Excluded>Editor\Code\InMethod</Excluded>
+                <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+                <Excluded>Editor\Code\InProperty</Excluded>
+                <Excluded>Editor\Code\InString</Excluded>
+              </Context>
+            </Expansion>
+          </Template>
+          <Template Name="a?Type?0-" CaseSensitiveName="false">
+            <Comment>Declares a property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+            <Expansion Priority="0">
+              <Body>«:p?Type?0-(AutoImplemented=true)»</Body>
+              <Context>
+                <Selected>Editor\Line\OnEmptyLine</Selected>
+                <Excluded>Editor\Code\InComment</Excluded>
+                <Excluded>Editor\Code\InMethod</Excluded>
+                <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+                <Excluded>Editor\Code\InProperty</Excluded>
+                <Excluded>Editor\Code\InString</Excluded>
+              </Context>
+            </Expansion>
+          </Template>
+        </TemplateCategory>
+        <Template Name="a" CaseSensitiveName="false">
+          <Comment>Declares an auto-implemented property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.(AutoImplemented=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="a." CaseSensitiveName="false">
+          <Comment>Declares an auto-implemented property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="a:" CaseSensitiveName="false">
+          <Comment>Declares an auto-implemented property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p:(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="a?Type?" CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="a?Type?-" CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?-(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="a?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?:(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="da" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of auto-implemented property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:da.»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="da." CaseSensitiveName="false">
+          <Comment>Declares a default implementation of auto-implemented property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="da?Type?" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:dp?Type?(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="da?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:dp?Type?:(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="da?Type?+" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "a" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:dp?Type?+(AutoImplemented=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <TemplateCategory Name="Read/Write" OptExpanded="true">
+        <TemplateCategory Name="Generics">
+          <Template Name="p?Type?0" CaseSensitiveName="false">
+            <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+            <Expansion Priority="0">
+              <Body>«:#TypePrep#(IsNullable=true)»«:#ReadWritePropertyRouter#»</Body>
+              <Context>
+                <Selected>Editor\Line\OnEmptyLine</Selected>
+                <Excluded>Editor\Code\InComment</Excluded>
+                <Excluded>Editor\Code\InMethod</Excluded>
+                <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+                <Excluded>Editor\Code\InProperty</Excluded>
+                <Excluded>Editor\Code\InString</Excluded>
+              </Context>
+            </Expansion>
+          </Template>
+          <Template Name="p?Type?0-" CaseSensitiveName="false">
+            <Comment>Declares an abstract property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+            <Expansion Priority="0">
+              <Body>«:#TypePrep#(IsNullable=true)»«:#ReadWritePropertyRouter#(IsAbstract=true)»</Body>
+              <Context>
+                <Selected>Editor\Line\OnEmptyLine</Selected>
+                <Excluded>Editor\Code\InComment</Excluded>
+                <Excluded>Editor\Code\InMethod</Excluded>
+                <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+                <Excluded>Editor\Code\InProperty</Excluded>
+                <Excluded>Editor\Code\InString</Excluded>
+              </Context>
+            </Expansion>
+          </Template>
+          <Template Name="p?Type?0," CaseSensitiveName="false">
+            <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+            <Expansion Priority="0">
+              <Body>«:#TypePrep#(IsNullable=true)»«:#ReadWritePropertyNoFieldRouter#»</Body>
+              <Context>
+                <Selected>Editor\Line\OnEmptyLine</Selected>
+                <Excluded>Editor\Code\InComment</Excluded>
+                <Excluded>Editor\Code\InMethod</Excluded>
+                <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+                <Excluded>Editor\Code\InProperty</Excluded>
+                <Excluded>Editor\Code\InString</Excluded>
+              </Context>
+            </Expansion>
+          </Template>
+        </TemplateCategory>
+        <TemplateCategory Name="System" OptExpanded="true">
+          <Template Name="#ReadWritePropertyNoFieldRouter#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>«:#StaticIfNeeded#»«:#PropertyBodyNoField#»</Body>
+              <Context />
+            </Expansion>
+          </Template>
+          <Template Name="#ReadWritePropertyRouter#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>«:#MemberHeader#»val «BlockAnchor»«Field(PropertyName)»«Caret» «:#TypeReferenceField#»= «:#PropertyVarInitialization#» «:#InterfacePropertyAccessors#»«FinalTarget»</Body>
+              <Context>
+                <Selected>System\VariableMatches(AutoImplemented,true)</Selected>
+              </Context>
+            </Expansion>
+            <Expansion Priority="1">
+              <Body>«:#InterfaceProperty#»</Body>
+              <Context>
+                <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+              </Context>
+            </Expansion>
+            <Expansion Priority="2">
+              <Body>«:#PropertyReadWrite#»</Body>
+              <Context />
+            </Expansion>
+          </Template>
+        </TemplateCategory>
+        <Template Name="dp" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:dp.»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.,»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp." CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp.," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp:" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p:(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp:," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p:,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp?Type?" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp?Type?," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?:(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp?Type?:," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:p?Type?:,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dp?Type?+" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#PropertyReadWriteVirtual#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p" CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p," CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:p.,»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p." CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyRouter#(IsTypeDeclared=false,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p.," CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyNoFieldRouter#(IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p:" CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyRouter#»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p:," CaseSensitiveName="false">
+          <Comment>Declares a read/write property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyNoFieldRouter#»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p?Type?" CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyRouter#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p?Type?-" CaseSensitiveName="false">
+          <Comment>Declares an abstract property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyRouter#(IsTypeDeclared=true,IsAbstract=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p?Type?," CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyNoFieldRouter#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyRouter#(IsTypeDeclared=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="p?Type?:," CaseSensitiveName="false">
+          <Comment>Declares a property of the specified type. The letters following the "p" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadWritePropertyNoFieldRouter#(IsTypeDeclared=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <TemplateCategory Name="Read-only" OptExpanded="true">
+        <TemplateCategory Name="System" OptExpanded="true">
+          <Template Name="#ReadOnlyPropertyNoFieldRouter#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>«:#StaticIfNeeded#»«:#ReadOnlyPropertyBodyNoField#»</Body>
+              <Context />
+            </Expansion>
+          </Template>
+          <Template Name="#ReadOnlyPropertyRouter#" CaseSensitiveName="false">
+            <Expansion Priority="0">
+              <Body>«:#StaticIfNeeded#»«:#InterfaceReadOnlyPropertyBody#»</Body>
+              <Context>
+                <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+              </Context>
+            </Expansion>
+            <Expansion Priority="1">
+              <Body>«:#PropertyReadOnly#»</Body>
+              <Context />
+            </Expansion>
+          </Template>
+        </TemplateCategory>
+        <Template Name="dr," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:dr.,»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr." CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:r.(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr.," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:r.,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr:" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:r:(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr:," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:r:,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr?Type?" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:r?Type?(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr?Type?," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:r?Type?,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:r?Type?:(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr?Type?:," CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:r?Type?:,(IsDefault=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="dr?Type?+" CaseSensitiveName="false">
+          <Comment>Declares a default implementation of read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#PropertyReadOnlyVirtual#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r," CaseSensitiveName="false">
+          <Comment>Declares a read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:r.,»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r." CaseSensitiveName="false">
+          <Comment>Declares a read-only property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyRouter#(IsTypeDeclared=false,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r.," CaseSensitiveName="false">
+          <Comment>Declares a read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyNoFieldRouter#(IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r:" CaseSensitiveName="false">
+          <Comment>Declares a read-only property of infered type. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyRouter#»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r:," CaseSensitiveName="false">
+          <Comment>Declares a read-only property of infered type. This property does not declare a field variable for storage. </Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyNoFieldRouter#»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r?Type?" CaseSensitiveName="false">
+          <Comment>Declares a read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyRouter#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r?Type?-" CaseSensitiveName="false">
+          <Comment>Declares an abstract read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyRouter#(IsTypeDeclared=true,IsAbstract=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r?Type?," CaseSensitiveName="false">
+          <Comment>Declares a read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyNoFieldRouter#(IsTypeDeclared=true,IsInfered=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r?Type?:" CaseSensitiveName="false">
+          <Comment>Declares a read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyRouter#(IsTypeDeclared=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="r?Type?:," CaseSensitiveName="false">
+          <Comment>Declares a read-only property of the specified type. The letters following the "r" indicate the type. Use the Core\Aliases\Dynamic Lists options page to add new types. This property will not have a corresponding field for storage.</Comment>
+          <Expansion Priority="0">
+            <Body>«:#ReadOnlyPropertyNoFieldRouter#(IsTypeDeclared=true)»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InMethod</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InProperty</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <TemplateCategory Name="Write-only" />
+      <Template Name="beg" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>with get</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="begps" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:begs(Scope= private )»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="begs" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>with get,«?Get(Scope)»set</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="bgps" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:bgs(Scope=private )»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="bgpts" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:bgs(Scope=protected )»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="bgs" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>with get() = «Marker»«Cursor»
+and «?Get(Scope)»set(value) = «Marker»value</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Typecast Instances" />
+    <TemplateCategory Name="Types" OptExpanded="true">
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#AddAbstractMember#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>
+abstract member «BlockAnchor»«Field(MemberName)»«Caret» : «Field(Signature)»«Target(#AddAbstractMember#)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#AddEnum#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>
+| «Caret»«Field(NextElement,Press Enter to add another element or Escape to jump to the marker)»«BlockAnchor» = «Field(Value)»«Target(#AddEnum#)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#AddRecordField#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>;
+«BlockAnchor»«Field(NextField)»«Caret»: «Field(FieldType)»;«Target(#AddRecordField#)»</Body>
+            <Context>
+              <Excluded>Editor\Line\Left Text Contains(;)</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>
+«BlockAnchor»«Field(NextField)»«Caret» : «Field(FieldType)»;«Target(#AddRecordField#)»</Body>
+            <Context>
+              <Selected>Editor\Line\Left Text Contains(;)</Selected>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#AddUnionConstructor#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>
+| «Field(Constructor,Enter constructor name)» of «Field(,Enter single parameter type or names with types)»«Target(#AddUnionConstructor#)»</Body>
+            <Context>
+              <Excluded>Editor\Line\Left Text Contains(|)</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>
+| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret» of «Field(,Enter single parameter type or names with types)»«Target(#AddUnionConstructor#)»</Body>
+            <Context>
+              <Selected>Editor\Line\Left Text Contains(|)</Selected>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#BaseConstructorParameters#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«TextLink(parameters)»</Body>
+            <Context>
+              <Selected>System\VariableMatches(WithConstructor,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body />
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Class#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>[&lt;AbstractClass&gt;]
+«:#ClassDeclaration#»</Body>
+            <Context>
+              <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«:#ClassDeclaration#»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ClassDeclaration#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyClass)»(«FieldStart(,Enter any parameters)»«TextLink(parameters)»«FieldEnd») = «:#InheritsFrom#»</Body>
+            <Context>
+              <Selected>System\VariableMatches(WithConstructor,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>type «:#TypeName#»() = «:#InheritsFrom#»</Body>
+            <Context>
+              <Excluded>System\VariableMatches(WithConstructor,true)</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#Enum#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyEnum)» =
+ | «Field(NextElement,Press Enter to add another element or Escape to jump to the marker)» = «Field(Value)»«Target(#AddEnum#)»
+«Marker»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#InheritsFrom#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>
+    inherit «?Get(Type)»(«Marker»«:#BaseConstructorParameters#»)«FinalTarget»</Body>
+            <Context>
+              <Selected>System\VariableMatches(HasAncestor,true)</Selected>
+              <Excluded>Editor\Code\Analysis\IsSealedType(«?Get(Type.FullName)»)</Excluded>
+              <Excluded>Editor\Code\Analysis\IsValueType(«?Get(Type.FullName)»)</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Interface#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «Caret»«Field(IMyInterface,Interface name)»«BlockAnchor» =
+    abstract member «Field(MemberName)» : «Field(Signature)»«Target(#AddAbstractMember#)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ObjectExpressonParameters#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body />
+            <Context>
+              <Selected>System\VariableMatches(IsParameterless,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body> «Field(,Enter constructor parameters)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Record#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyRecord)» = { «Field(NextField)» : «Field(,Enter field type)»«Target(#AddRecordField#)» }«Marker»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Struct#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyStruct)» =
+    struct
+        «FinalTarget»
+    end«Marker»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#TypeName#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«BlockAnchor»«FieldStart»«Link(«?Get(TypeName)»)»«FieldEnd»«Caret»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Union#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyUnion)» =«:#AddUnionConstructor#»</Body>
+            <Context>
+              <Selected>System\VariableMatches(AddConstructors,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>type «:#TypeName#(TypeName=MyUnion)» =
+    «FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#UnionSingleCase#" CaseSensitiveName="false">
+          <Expansion Priority="1">
+            <Body>type «:#TypeName#(TypeName=MyUnion)» = «Link(«?Get(TypeName)»)» of «Field(,Enter type)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="c" CaseSensitiveName="false">
+        <Comment>Class with constructor parameters</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Class#(WithConstructor=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\DeclaresLocal(c)</Excluded>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c-" CaseSensitiveName="false">
+        <Comment>Abstract class with constructor parameters</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Class#(WithConstructor=true,IsAbstract=true)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="c," CaseSensitiveName="false">
+        <Comment>Class (no constructor parameters)</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Class#»</Body>
+          <Context>
+            <Excluded>Editor\Code\DeclaresLocal(c)</Excluded>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c,-" CaseSensitiveName="false">
+        <Comment>Abstract class (no constructor parameters)</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Class#(IsAbstract=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c-," CaseSensitiveName="false">
+        <Comment>Abstract class (no constructor parameters)</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Class#(IsAbstract=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c?Type?" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Class#(WithConstructor=true,HasAncestor=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c?Type?-" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Class#(WithConstructor=true,HasAncestor=true,IsAbstract=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c?Type?," CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Class#(HasAncestor=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c?Type?,-" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Class#(HasAncestor=true,IsAbstract=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="c?Type?-," CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Class#(HasAncestor=true,IsAbstract=true)»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+            <Excluded>Editor\Code\InMethod</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InProperty</Excluded>
+            <Excluded>Editor\Code\InStruct</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="e" CaseSensitiveName="false">
+        <Comment>enum</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Enum#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="i" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#Interface#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="oe" CaseSensitiveName="false">
+        <Comment>Object expression</Comment>
+        <Expansion Priority="0">
+          <Body>let «BlockAnchor»«Field(MyClass)»«Caret»«:#ObjectExpressonParameters#» =
+   {
+       new «Field(,Enter interface name)» with
+       «FinalTarget»
+   }</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="oe," CaseSensitiveName="false">
+        <Comment>Parameterles object expressoin</Comment>
+        <Expansion Priority="0">
+          <Body>«:oe(IsParameterless=true)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="r" CaseSensitiveName="false">
+        <Comment>Define record type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Record#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="s" CaseSensitiveName="false">
+        <Comment>Define struct type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Struct#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="t" CaseSensitiveName="false">
+        <Comment>Define type</Comment>
+        <Expansion Priority="0">
+          <Body>type «Field»«Caret» = «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="u" CaseSensitiveName="false">
+        <Comment>Define union type with constructors</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Union#(AddConstructors=true)»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="u," CaseSensitiveName="false">
+        <Comment>Define union type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Union#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="u." CaseSensitiveName="false">
+        <Comment>Define single case union type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#UnionSingleCase#»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="uc" CaseSensitiveName="false">
+        <Comment>Define union constructor</Comment>
+        <Expansion Priority="0">
+          <Body>| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret» of «Field(,Enter single parameter type or names with types)»«FinalTarget»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InInterface</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <Template Name="fun" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>fun «Field»«Caret» -&gt; «FinalTarget»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="ns" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>namespace «Field(,Enter namespace name)»«Caret»
+
+«FinalTarget»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <TemplateCategory Name="MemberAccess" OptExpanded="true">
+    <TemplateCategory Name="DateTime" OptExpanded="true">
+      <Template Name="d8n" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>DateTime.Now</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="d8t" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>DateTime.Today </Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dtn" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:d8n»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="dtt" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:d8t»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+  </TemplateCategory>
+  <TemplateCategory Name="Program Blocks" OptExpanded="true">
+    <TemplateCategory Name="Computation Expressions" OptExpanded="true">
+      <Template Name="async" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>async{ «Caret» }</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="asyncb" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>async {
+    «Caret»
+    }</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Flow" OptExpanded="true">
+      <TemplateCategory Name="System">
+        <Template Name="#DefaultForEach#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>for «SoftCaret»«Field(item,Variable name)»«SoftAnchor» in «:#ExpressionFromClipboard#» do «FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ExpressionFromClipboard#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«?Paste(true)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#ForEachRouter#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>for «FieldStart»«Caret»«?FormatLocalName(«?GetIteratorName(«?Paste», «?Get(EnumType)»)»)»«BlockAnchor»«FieldEnd» in «:#ExpressionFromClipboard#» «FinalTarget»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\HasArrayType</Selected>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>«:#DefaultForEach#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\Implements(System.Collections.Generic.IEnumerable`1)</Selected>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="2">
+            <Body>for «?FormatLocalName(«?GetIteratorName(«?Paste», «?Get(EnumType)»)»)» in «:#ExpressionFromClipboard#» do «FinalTarget»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\Implements(System.Collections.IEnumerable)</Selected>
+              <Excluded>Editor\Clipboard\EnumerableTypeIsObject</Excluded>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+              <Excluded>Editor\Line\OnEmptyLine</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="3">
+            <Body>«:#DefaultForEach#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\Implements(System.Collections.IEnumerable)</Selected>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Clipboard\EnumerableTypeIsObject</Excluded>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+          <Expansion Priority="4">
+            <Body>«:#DefaultForEach#»</Body>
+            <Context>
+              <Selected>Editor\Line\OnEmptyLine</Selected>
+              <Excluded>Editor\Code\InComment</Excluded>
+              <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+              <Excluded>Editor\Code\InString</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#ForLoopRouter#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«?Set(upperBound,«?Paste».Length)»«:#MainForLoop#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\HasIdentifierWithProperty(Length)</Selected>
+              <Selected>Editor\Line\AtEndOfLine</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body />
+            <Context>
+              <Selected>Editor\Clipboard\HasIdentifierWithProperty(Count)</Selected>
+              <Selected>Editor\Line\AtEndOfLine</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="2">
+            <Body>«?Set(upperBound,«?Paste»)»«:#MainForLoop#»</Body>
+            <Context>
+              <Selected>Editor\Clipboard\HasIdentifier</Selected>
+              <Selected>Editor\Line\AtEndOfLine</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="3">
+            <Body>«?Set(upperBound,«:#UpperBoundPlaceholder#»)»«:#MainForLoop#»</Body>
+            <Context>
+              <Selected>Editor\Line\AtEndOfLine</Selected>
+              <Excluded>Editor\Clipboard\HasIdentifier</Excluded>
+            </Context>
+          </Expansion>
+        </Template>
+        <Template Name="#IteratorVar#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«Link(«?Get(IteratorVar)»)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#MainForLoop#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>for «:#IteratorVar#» = «Caret»«FieldStart(Upper bound)»«?Get(upperBound)»«FieldEnd»«BlockAnchor» downto 1 do «FinalTarget»</Body>
+            <Context>
+              <Selected>System\VariableMatches(Reverse,true)</Selected>
+            </Context>
+          </Expansion>
+          <Expansion Priority="1">
+            <Body>for «:#IteratorVar#» = 1 to «Caret»«FieldStart(Upper bound)»«?Get(upperBound)»«FieldEnd»«BlockAnchor» do «FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#match_case#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>| «?Get(CaseExpression)» -&gt; «Field(ResultExpression)»«TrimLeft»«FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#match_case_WithDefinedExpression#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>| «?Get(CaseExpression)» -&gt; «BlockAnchor»«Field(ResultExpression)»«Caret»«TrimLeft»«FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#match_definition#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>match «Caret»«Field(parameter)»«BlockAnchor» with</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#NumericForEach#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>for «:#IteratorVar#» in «Caret»«Field(Collection,Collection instance)»«BlockAnchor» do «FinalTarget»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="case" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(CaseExpression,«BlockAnchor»«Field(Expression)»«Caret»)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="cht" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(CaseExpression,«:#head_tail#»)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="cle" CaseSensitiveName="false">
+        <Comment>Case with empty list option</Comment>
+        <Expansion Priority="0">
+          <Body>«?Set(CaseExpression,[])»«:#match_case_WithDefinedExpression#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="fe" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#ForEachRouter#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="for" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:forto»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="fordto" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(IteratorVar,i)»«:#ForLoopRouter#(Reverse=true)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="forin" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(IteratorVar,i)»«:#NumericForEach#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="forto" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(IteratorVar,i)»«:#ForLoopRouter#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="fr?IteratorVar?dto" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#ForLoopRouter#(Reverse=true)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="fr?IteratorVar?in" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#NumericForEach#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="fr?IteratorVar?to" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#ForLoopRouter#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="match" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#match_definition#»
+| «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="mc" CaseSensitiveName="false">
+        <Comment>match with single case statement</Comment>
+        <Expansion Priority="0">
+          <Body>«:#match_definition#»
+«?Set(CaseExpression,«Field(Expression)»)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="mo" CaseSensitiveName="false">
+        <Comment>match against option type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#match_definition#»
+«?Set(CaseExpression,Some «Field(identifier)»)»«:#match_case#»
+«?Set(CaseExpression,None)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="raise" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>raise(«BlockAnchor»«Field(,Enter exception object name or create new)»«Caret»)«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="rn" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:raise»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="wh" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:while»</Body>
+          <Context>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body />
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="while">
+        <Expansion Priority="0">
+          <Body>while «:#ExpressionPlaceholder#» do
+    «Marker»</Body>
+          <Context>
+            <Selected>Editor\Line\OnEmptyLine</Selected>
+            <Excluded>Editor\Code\InComment</Excluded>
+            <Excluded>Editor\Code\InPreprocessorDirective</Excluded>
+            <Excluded>Editor\Code\InString</Excluded>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body />
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="List Expressions">
+      <TemplateCategory Name="System" OptExpanded="true">
+        <Template Name="#head_tail#" CaseSensitiveName="false">
+          <Expansion Priority="0">
+            <Body>«BlockAnchor»«Field(head)»«Caret» :: «Field(tail)»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+      </TemplateCategory>
+      <Template Name="ht" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#head_tail#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+  </TemplateCategory>
+  <TemplateCategory Name="System" OptExpanded="true">
+    <TemplateCategory Name="Declaration Bodies" OptExpanded="true">
+      <Template Name="#EventName#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(MemberName,EventName)»«:#MemberName#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#FieldQualifier#" CaseSensitiveName="false">
+        <Expansion Priority="2">
+          <Body>«BlockAnchor»«FieldStart(Field qualifier)»«Link(this)»«FieldEnd»«Caret»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#GetterNotImplemented#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Marker»raise(NotImplementedException("«Link(PropertyName)» getter."))</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#InterfaceProperty#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#»«:#TypeReference#» «:#InterfacePropertyAccessors#»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#InterfacePropertyAccessors#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>with get, set</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#InterfaceReadOnlyPropertyBody#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#» : «?Get(Type)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#InterfaceWriteOnlyPropertyBody#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#» : «?Get(Type)» with set</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MemberHeader#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>abstract member </Body>
+          <Context>
+            <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>override </Body>
+          <Context>
+            <Selected>System\VariableMatches(IsOverride,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>default </Body>
+          <Context>
+            <Selected>System\VariableMatches(IsDefault,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="3">
+          <Body>member </Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MemberName#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Caret»«FieldStart»«Link(«?Get(MemberName)»)»«FieldEnd»«BlockAnchor»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«Caret»«FieldStart»«Link(«?Get(MemberName)»)»«FieldEnd»«BlockAnchor»</Body>
+          <Context>
+            <Selected>Editor\Code\InStaticType</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>«Caret»«FieldStart»«Link(«?Get(MemberName)»)»«FieldEnd»«BlockAnchor»</Body>
+          <Context>
+            <Selected>Editor\Templates\First Character is Uppercase</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="3">
+          <Body>«:#FieldQualifier#».«FieldStart»«Link(«?Get(MemberName)»)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodName#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(MemberName,MethodName)»«:#MemberName#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodParameters#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>()</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsParameterless,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>(«Field(,Enter any parameters)»)</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodSignture#" CaseSensitiveName="false">
+        <Expansion Priority="1">
+          <Body>«:#MethodParameters#»«:#MethodTypeReference#» = «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodSigntureAbstract#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body> : unit -&gt; «?Get(Type)»</Body>
+          <Context>
+            <Selected>System\VariableMatches(Parameterless,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body> : «Field(,Enter input type)» -&gt; «?Get(Type)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodTypeReference#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body />
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body> : «Link(«?Get(Type)»)»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body> : «FieldStart»«Link(Object)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#MethodVirtual#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>abstract member «:#MethodName#(IsAbstract=true)»«:#MethodSigntureAbstract#»
+default «FieldStart(Field qualifier)»«Link(this)»«FieldEnd».«Link(«?Get(MemberName)»)»«:#MethodParameters#»«:#TypeReference#» = «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyAuto#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»val «BlockAnchor»«Field(PropertyName)»«Caret» = «:#PropertyVarInitialization#» «:#InterfacePropertyAccessors#»«FinalTarget»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«:#MemberHeader#»val «BlockAnchor»«Field(PropertyName)»«Caret» : «Field(«?Get(Type)»)» = «:#PropertyVarInitialization#» «:#InterfacePropertyAccessors#»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>«:#MemberHeader#»val «BlockAnchor»«Field(PropertyName)»«Caret» : «?Get(Type)» = «Target» «:#InterfacePropertyAccessors#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyBody#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#»
+    with «:#PropertyGetter#»
+    and «:#PropertySetter#»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyBodyNoField#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#»
+    with get()«:#TypeReferenceField#» = «:#GetterNotImplemented#»
+    and set(value«:#TypeReference#») = «:#SetterNotImplemented#»«FinalTarget»</Body>
+          <Context />
+          <UsingClause>System</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyField#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»let mutable «:#PropertyVar#» «:#TypeReferenceField#»= «:#PropertyVarInitialization#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyGetter#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>get()«:#TypeReference#» = «Link(propertyName)»</Body>
+          <Context />
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>get()«:#TypeReference#» = «Link(PropertyName,FormatFieldName,PropertyNameFromField)»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyName#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(MemberName,PropertyName)»«:#MemberName#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyReadOnly#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»«:#MemberHeader#»«:#PropertyName#» «:#TypeReferenceField#»= «FinalTarget»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«:#PropertyVarDeclaration#»
+«:#StaticIfNeeded#»«:#ReadOnlyPropertyBody#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyReadOnlyVirtual#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#PropertyVarDeclaration#»
+abstract member «Caret»«FieldStart»«Link(PropertyName)»«FieldEnd»«BlockAnchor» : «?Get(Type)» «:#InterfacePropertyAccessors#»
+default «FieldStart(Field qualifier)»«Link(this)»«FieldEnd».«Link(PropertyName)»«:#TypeReference#» = «Link(propertyName)»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyReadWrite#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#PropertyVarDeclaration#»
+«:#StaticIfNeeded#»«:#PropertyBody#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyReadWriteVirtual#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#PropertyVarDeclaration#»
+abstract member «Caret»«FieldStart»«Link(PropertyName)»«FieldEnd»«BlockAnchor» : «?Get(Type)» «:#InterfacePropertyAccessors#»
+default «FieldStart(Field qualifier)»«Link(this)»«FieldEnd».«Link(PropertyName)»
+    with «:#PropertyGetter#»
+    and «:#PropertySetter#»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertySetter#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>set(«Link(value)»«:#TypeReference#») = «Link(propertyName)» &lt;- «FieldStart»«Link(value)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>set(«Link(value)»«:#TypeReference#») = «Link(PropertyName,FormatFieldName,PropertyNameFromField)» &lt;- «FieldStart»«Link(value)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyVar#" CaseSensitiveName="false">
+        <Comment>Field variable reference for a property</Comment>
+        <Expansion Priority="0">
+          <Body>«FieldStart»«Link(propertyName)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«FieldStart»«Link(PropertyName,FormatFieldName,PropertyNameFromField)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyVarDeclaration#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#PropertyField#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#PropertyVarInitialization#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«FieldStart»Unchecked.defaultof&lt;«Target»&gt;«FieldEnd»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,false)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«FieldStart»Unchecked.defaultof&lt;«Link(«?Get(Type)»)»&gt;«FieldEnd»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>«FieldStart»Unchecked.defaultof&lt;«Link(«?Get(Type)»)»&gt;«FieldEnd»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="3">
+          <Body>«FieldStart»Unchecked.defaultof&lt;«Link(Object)»&gt;«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#ReadOnlyPropertyBody#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#» «:#TypeReferenceField#»= «Link(propertyName)»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«:#MemberHeader#»«:#PropertyName#»«:#TypeReference#» = «Link(PropertyName,FormatFieldName,PropertyNameFromField)»«FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#ReadOnlyPropertyBodyNoField#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#MemberHeader#»«:#PropertyName#» «:#TypeReferenceField#»= «:#GetterNotImplemented#»«FinalTarget»</Body>
+          <Context />
+          <UsingClause>System</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="#SetterNotImplemented#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Marker»raise(NotImplementedException("«Link(PropertyName)» setter."))</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#TypeReference#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body />
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body> : «Link(«?Get(Type)»)»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>«FieldStart» : «Link(Object)»«FieldEnd»</Body>
+          <Context />
+        </Expansion>
+        <Expansion Priority="3">
+          <Body>«FieldStart» : «Link(Object)»«FieldEnd»</Body>
+          <Context>
+            <Selected>Editor\Code\InProperty</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="4">
+          <Body>: «FieldStart»«Link(Object)»«FieldEnd»</Body>
+          <Context>
+            <Selected>Editor\Code\InMethod</Selected>
+          </Context>
+        </Expansion>
+      </Template>
+      <Template Name="#TypeReferenceField#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body />
+          <Context>
+            <Selected>System\VariableMatches(IsInfered,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>: «Link(«?Get(Type)»)» </Body>
+          <Context>
+            <Selected>System\VariableMatches(IsTypeDeclared,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>«FieldStart»: «Link(Object)» «FieldEnd»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Misc" OptExpanded="true">
+      <Template Name="#CaretPlaceholder#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Caret»«?Get(placeholderText)»«BlockAnchor»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#ExpressionPlaceholder#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(placeholderText,Expression)»«:#CaretPlaceholder#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#NullableTypePrep#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(Type,Nullable&lt;«?Get(Type)»&gt;)»</Body>
+          <Context>
+            <Selected>System\VariableMatches(IsNullable,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body />
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#UpperBoundPlaceholder#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«?Set(placeholderText,UpperBound)»«:#CaretPlaceholder#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <TemplateCategory Name="Visibility" OptExpanded="true">
+      <Template Name="#StaticIfNeeded#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body />
+          <Context>
+            <Selected>System\VariableMatches(IsAbstract,true)</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>static </Body>
+          <Context>
+            <Selected>Editor\Code\InStaticType</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="2">
+          <Body>static </Body>
+          <Context>
+            <Selected>Editor\Templates\First Character is Uppercase</Selected>
+          </Context>
+        </Expansion>
+        <Expansion Priority="3">
+          <Body />
+          <Context />
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+  </TemplateCategory>
+  <TemplateCategory Name="Using" OptExpanded="true">
+    <Template Name="o" CaseSensitiveName="false">
+      <Comment>open statement</Comment>
+      <Expansion Priority="0">
+        <Body>«:open»</Body>
+        <Context>
+          <Selected>Editor\Line\OnEmptyLine</Selected>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="o2d" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osdd»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="omfsl" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open Microsoft.FSharp.Linq</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="omw" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open Microsoft.Win32</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="open" CaseSensitiveName="false">
+      <Comment>open statement</Comment>
+      <Expansion Priority="0">
+        <Body>open «Caret»</Body>
+        <Context>
+          <Selected>Editor\Line\OnEmptyLine</Selected>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="os" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Collections","System.ComponentModel","System.Configuration")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oscg" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Collections.Generic</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osco" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Collections.ObjectModel</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oscs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Collections.Specialized</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osd" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Data","System.Diagnostics","System.Drawing")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osd2d" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osdd2d»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.Common</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdd" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Drawing.Drawing2D","System.Drawing.Design")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdd2d" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Drawing.Drawing2D</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdg" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Diagnostics</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdi" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Drawing.Imaging</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdo" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.Odbc</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdoc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.OracleClient</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdod" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.OleDb</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdodb" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osdod»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdp" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Drawing.Printing</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osds" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Diagnostics.SymbolStore</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdsc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.SqlClient</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdss" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osds»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdssce" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.SqlServerCE</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdst" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Data.SqlTypes</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osdt" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Drawing.Text</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ose" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oses»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osec" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osescrm»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osei" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osesi»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oses" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.EnterpriseServices</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osescrm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.EnterpriseServices.CompensatingResourceManager</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osesi" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.EnterpriseServices.Internal</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osg" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Globalization</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osi" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osio»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osii" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osiois»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osio" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.IO</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osiois" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.IO.IsolatedStorage</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osl" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Linq</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Messaging","System.Management")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osmi" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Management.Instrumentation</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osn" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Net</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osns" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Net.Sockets</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osr" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Resources","System.Reflection")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osrcs»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrcs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.CompilerServices</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osre" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Reflection.Emit</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osri" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.InteropServices</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osric" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osriscm»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrie" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osrise»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osris" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:osri»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osriscm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.InteropServices.CustomMarshalers</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrise" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.InteropServices.Expando</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrr" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrra" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Activation</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Runtime.Remoting.Channels","System.Runtime.Remoting.Contexts")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrch" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Channels.Http</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrct" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Channels.Tcp</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrl" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Lifetime</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Runtime.Remoting.Messaging","System.Runtime.Remoting.Metadata")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrms" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.MetadataServices</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrmw" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Metadata.W3cXsd2001</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrp" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Proxies</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrrs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Remoting.Services</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Serialization</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrsf" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Serialization.Formatters</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrsfb" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Serialization.Formatters.Binary</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osrsfs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Runtime.Serialization.Formatters.Soap</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oss" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Security</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ossc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Security.Cryptography</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osscx" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Security.Cryptography.Xml","System.Security.Cryptography.X509Certificates")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ossm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.ServiceModel</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ossp" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Security.Permissions","System.Security.Policy","System.Security.Principal","System.ServiceProcess")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ost" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Text","System.Threading","System.Timers")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ostr" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:ostre»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ostre" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Text.RegularExpressions</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ostrx" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:ostre»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osw" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Web","System.Windows")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Web.Configuration","System.Web.Caching")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswf" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Windows.Forms</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswfd" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Windows.Forms.Design</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswh" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.Hosting</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswm" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Web.Mail","System.Web.Mobile","System.Windows.Media","System.Windows.Markup")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswn" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Windows.Navigation</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osws" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Web.Services","System.Web.Security","System.Windows.Shapes","System.Windows.Shell")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswsc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.Services.Configuration</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswsd" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Web.Services.Description","System.Web.Services.Discovery")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswsh" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Windows.Shapes</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswsp" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.Services.Protocols</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswss" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.SessionState</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswu" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswui»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswud" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuid»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswudw" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuidwc»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuh" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuihc»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswui" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuid" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.Design</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuidwc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.Design.WebControls</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuihc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.HtmlControls</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuimc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.MobileControls</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuimca" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.MobileControls.Adapters</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuiwc" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Web.UI.WebControls</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswum" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuimc»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuma" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuimca»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="oswuw" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:oswuiwc»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osx" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Xml</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osxs" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,"System.Xml.Serialization","System.Xml.Schema")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osxx" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open «Intellassist($ImageIndex.Namespace,System.Xml.Xsl","System.Xml.XPath")»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="osxxp" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System.Xml.XPath</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ow" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>open System
+open System.Drawing
+open System.Windows.Forms</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+    <Template Name="ow3" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:usrrmw»</Body>
+        <Context>
+          <Excluded>Editor\Code\InComment</Excluded>
+          <Excluded>Editor\Code\InEnum</Excluded>
+          <Excluded>Editor\Code\InString</Excluded>
+          <Excluded>Editor\Code\InType</Excluded>
+        </Context>
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <TemplateCategory Name="{Misc}" />
+</Templates>

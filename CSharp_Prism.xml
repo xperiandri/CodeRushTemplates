@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Prism">
+  <TemplateCategory Name="Commands" OptExpanded="true">
+    <TemplateCategory Name="System" OptExpanded="true">
+      <Template Name="#CanExecuteMethod#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>private bool Can«Link(CommandName)»(«?Get(Parameter)»)
+{
+    throw new NotImplementedException();//return «Marker»;
+}</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#CommandField#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#FieldDefaultScope#»readonly DelegateCommand&lt;«TypeLink(«?Get(Type)»)»&gt; «:#CommandVar#»;</Body>
+          <Context />
+          <ContextString>[VariableMatches(IsGeneric,true)]</ContextString>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>«:#FieldDefaultScope#»readonly DelegateCommand «:#CommandVar#»;</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#CommandName#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Caret»«FieldStart(Command name)»«Link(CommandName)»«FieldEnd»«BlockAnchor»Command</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#CommandVar#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«Link(CommandName,FormatFieldName,PropertyNameFromField)»Command</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#CommandVarDeclaration#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#PropertyFieldsSectionStart#»«:#CommandField#»«:#PropertyFieldsSectionEnd#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#DelegateCommand#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#CommandVarDeclaration#»
+
+public ICommand «:#CommandName#»
+{
+    get { return «:#CommandVar#»; }
+}
+
+«:#CanExecuteMethod#»
+
+«:#ExecuteMethod#»</Body>
+          <Context />
+          <ContextString>[InClass]</ContextString>
+          <UsingClause>System.Windows.Input</UsingClause>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>ICommand «:#CommandName#»;</Body>
+          <Context />
+          <ContextString>[InInterface]</ContextString>
+          <UsingClause>System.Windows.Input</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="#DelegateCommandGeneric#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>«:#CommandVarDeclaration#(IsGeneric=true)»
+
+public ICommand «:#CommandName#»
+{
+    get { return «:#CommandVar#»; }
+}
+«?Set(Parameter,«TypeLink(«?Get(Type)»)» «FieldStart(Parameter name)»«Link(parameter)»«FieldEnd»)»
+«:#CanExecuteMethod#»
+
+«:#ExecuteMethod#»</Body>
+          <Context />
+          <ContextString>[InClass]</ContextString>
+          <UsingClause>System.Windows.Input</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="#ExecuteMethod#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>private void Execute«Link(CommandName)»(«?Get(Parameter)»)
+{
+    «Marker»
+}</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="#InteractionRequest#" CaseSensitiveName="false">
+        <Expansion Priority="0">
+          <Body>
+          «:#FieldDefaultScope#» readonly InteractionRequest&lt;«Caret»«FieldStart(Request type)»«TypeLink("«?Get(NotificationType)»")»«FieldEnd»«BlockAnchor»&gt; «:#PropertyVar#» = new InteractionRequest&lt;«TypeLink("«?Get(NotificationType)»")»&gt;();
+
+          public IInteractionRequest «:#PropertyName#»
+          {
+          get { return «:#PropertyVar#»; }
+          }«Target»
+        </Body>
+          <Context />
+          <ContextString>[InClass]</ContextString>
+          <UsingClause>Microsoft.Practices.Prism.Interactivity.InteractionRequest</UsingClause>
+        </Expansion>
+        <Expansion Priority="1">
+          <Body>IInteractionRequest «:#PropertyName#»;</Body>
+          <Context />
+          <ContextString>[InInterface]</ContextString>
+          <UsingClause>Microsoft.Practices.Prism.Interactivity.InteractionRequest</UsingClause>
+        </Expansion>
+      </Template>
+    </TemplateCategory>
+    <Template Name="cmd" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:#DelegateCommand#»</Body>
+        <Context />
+        <ContextString>(([AssemblyReferenced(Microsoft.Practices.Prism)] || [InClass]) &amp;&amp; [OnEmptyLine]) &amp;&amp; !([InComment] || [InMethod] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+    <Template Name="cmd." CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:#DelegateCommandGeneric#(Type=object)»</Body>
+        <Context />
+        <ContextString>(([AssemblyReferenced(Microsoft.Practices.Prism)] || [InClass]) &amp;&amp; [OnEmptyLine]) &amp;&amp; !([InComment] || [InMethod] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+    <Template Name="cmd?Type?" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«:#DelegateCommandGeneric#»</Body>
+        <Context />
+        <ContextString>(([AssemblyReferenced(Microsoft.Practices.Prism)] || [InClass]) &amp;&amp; [OnEmptyLine]) &amp;&amp; !([InComment] || [InMethod] || [InProperty] || [InString])</ContextString>
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <TemplateCategory Name="System" OptExpanded="true">
+    <Template Name="#SetProperty#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>SetProperty&lt;«ReturnType»&gt;(ref «?FormatFieldName(«?Member»)», value)</Body>
+        <Context />
+      </Expansion>
+      <Expansion Priority="1">
+        <Body>SetProperty&lt;«Field(,Enter property type)»«Caret»&gt;(ref «FieldStart(,Enter backing store field name)»«?FormatFieldName(«?Member»)»«FieldEnd», value)</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#SetPropertyTypified#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>SetProperty&lt;«?Get(Type)»&gt;(ref «?FormatFieldName(«?Member»)», value)</Body>
+        <Context />
+      </Expansion>
+      <Expansion Priority="1">
+        <Body>SetProperty&lt;«?Get(Type)»&gt;(ref «BlockAnchor»«FieldStart(,Enter backing store field name)»«?FormatFieldName(«?Member»)»«FieldEnd»«Caret», value)</Body>
+        <Context />
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <Template Name="ifnsb" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetProperty#»)
+{
+	«FinalTarget»
+}</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifnsb?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetPropertyTypified#»)
+{
+	«FinalTarget»
+}</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifnset" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetProperty#»)
+	«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifnset?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetPropertyTypified#»)
+	«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifnsr" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetProperty#»)
+	return;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifnsr?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if (!«:#SetPropertyTypified#»)
+	return;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifs" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:ifset»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="ifs?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:ifset?Type?»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="ifsb" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetProperty#»)
+{
+	«FinalTarget»
+}</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifsb?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetPropertyTypified#»)
+{
+	«FinalTarget»
+}</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifset" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetProperty#»)
+	«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifset?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetPropertyTypified#»)
+	«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifsr" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetProperty#»)
+	return;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ifsr?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>if («:#SetPropertyTypified#»)
+	return;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="ir" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«?Set(NotificationType,Notification)»«:#InteractionRequest#»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="irc" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«?Set(NotificationType,Confirmation)»«:#InteractionRequest#»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="irn" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:ir»</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="set" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:#SetProperty#»;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="set?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:#SetPropertyTypified#»;«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InPropertyAccessor] &amp;&amp; !([InComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+</XmlTemplateCategoryInfo>

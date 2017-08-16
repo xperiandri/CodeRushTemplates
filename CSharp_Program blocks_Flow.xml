@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Flow">
+  <Comments>Templates in this category generate code that controls program flow. This includes loops (while, for, foreach, etc.), switch statements, and flow breakage (e.g., throw exceptions, return, break, continue, etc.).</Comments>
+  <Template Name="detn">
+    <Expansion Priority="0">
+      <Body>default: throw new «Caret»«Field(Exception)»«BlockAnchor»(«Field»);</Body>
+      <Context />
+      <ContextString>([InMethodBlock] || [InPropertyAccessor]) &amp;&amp; !([InAnyComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+  <Template Name="de">
+    <Expansion Priority="0">
+      <Body>«:#default#»</Body>
+      <Context />
+      <ContextString>([InMethodBlock] || [InPropertyAccessor]) &amp;&amp; !([InAnyComment] || [InPreprocessorDirective] || [InString])</ContextString>
+    </Expansion>
+  </Template>
+</XmlTemplateCategoryInfo>

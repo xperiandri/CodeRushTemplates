@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTemplateCategoryInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Code Contracts" OptExpanded="true">
+  <TemplateCategory Name="System">
+    <Template Name="#CollectionItemTypeNameSelected#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter collection item type)»«Caret»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#ConditionWithOptionalMessage#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter condition and optional message)»«Caret»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#ContractCondition#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter condition)»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#ContractConditionSelected#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter condition)»«Caret»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#ContractVariableName#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter variable name)»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+    <Template Name="#ContractVariableNameSelected#" CaseSensitiveName="false">
+      <Expansion Priority="0">
+        <Body>«Field(,Enter variable name)»«Caret»</Body>
+        <Context />
+      </Expansion>
+    </Template>
+  </TemplateCategory>
+  <Template Name="[ca" CaseSensitiveName="false">
+    <Expansion Priority="0" SuppressLastChar="true">
+      <Body>[ContractAbbreviator]</Body>
+      <Context />
+      <ContextString>!([InAnyComment] || [InString])</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="[cim" CaseSensitiveName="false">
+    <Expansion Priority="0" SuppressLastChar="true">
+      <Body>[ContractInvariantMethod]</Body>
+      <Context />
+      <ContextString>!([InAnyComment] || [InString])</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="[cppn" CaseSensitiveName="false">
+    <Expansion Priority="0" SuppressLastChar="true">
+      <Body>[ContractPublicPropertyName("«Field(,Enter property name)»")]</Body>
+      <Context />
+      <ContextString>!([InAnyComment] || [InString])</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="aih" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>static class ContractHelper
+{
+	[Pure]
+	static void AssumeInvariant&lt;T&gt;(T o) { }
+}</Body>
+      <Context />
+    </Expansion>
+  </Template>
+  <Template Name="cam" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Assume(«:#ConditionWithOptionalMessage#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cat" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Assert(«:#ConditionWithOptionalMessage#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="ceb" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:cecb»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cecb" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.EndContractBlock();</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cens" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Ensures(«:#ConditionWithOptionalMessage#»);</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="ceot" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:ceoth»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="ceoth" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.EnsuresOnThrow&lt;«Caret»«Field(Exception)»«BlockAnchor»&gt;(«:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cex" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Exists&lt;«:#CollectionItemTypeNameSelected#»&gt;(«Field», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cex," CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Exists(«Field(,Enter initial index)»«Caret», «Field(,Enter final index)», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cex?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Exists&lt;«?Get(Type)»&gt;(«Field»«Caret», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cfa" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.ForAll&lt;«:#CollectionItemTypeNameSelected#»&gt;(«Field», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cfa," CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.ForAll(«Field(,Enter initial index)»«Caret», «Field(,Enter final index)», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cfa?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.ForAll&lt;«?Get(Type)»&gt;(«Field»«Caret», «:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cim" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>«:[cim»
+private void ObjectInvariant()
+{
+	«FinalTarget»
+}</Body>
+      <Context />
+      <ContextString>[InClass]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cinv" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Invariant(«:#ConditionWithOptionalMessage#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cov" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.OldValue&lt;«Field(,Enter type)»«Caret»&gt;(«:#ContractVariableName#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cov?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.OldValue&lt;«?Get(Type)»&gt;(«:#ContractVariableNameSelected#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cr" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Requires&lt;«Caret»«Field(Exception)»«BlockAnchor»&gt;(«:#ContractCondition#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cr," CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Requires(«:#ContractConditionSelected#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cres" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Result&lt;«Field(,Enter type)»«Caret»&gt;();«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cres?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.Result&lt;«?Get(Type)»&gt;();</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cvar" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.ValueAtReturn&lt;«Field(,Enter type)»«Caret»&gt;(out «:#ContractVariableName#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+  <Template Name="cvar?Type?" CaseSensitiveName="false">
+    <Expansion Priority="0">
+      <Body>Contract.ValueAtReturn&lt;«?Get(Type)»&gt;(out «:#ContractVariableNameSelected#»);«FinalTarget»</Body>
+      <Context />
+      <ContextString>[InCodeBlock]</ContextString>
+      <UsingClause>System.Diagnostics.Contracts</UsingClause>
+    </Expansion>
+  </Template>
+</XmlTemplateCategoryInfo>
