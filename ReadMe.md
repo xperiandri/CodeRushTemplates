@@ -4,4 +4,6 @@ In order to import in F# an empty folder in settings must be created so that con
 
 ## How it works
 
-![Templates demo](https://www.devexpress.com/Products/CodeRush/i/IncrementalTemplates.gif)
+![Class demo](https://docs.devexpress.com/CodeRushForRoslyn/images/ExpandCTemplate.gif)
+![XAML demo](https://docs.devexpress.com/CodeRushForRoslyn/images/ExpandTemplateXAML.gif)
+![For and Property demo](https://docs.devexpress.com/CodeRushForRoslyn/images/expand-template-in-razor.gif)
