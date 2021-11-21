@@ -12,7 +12,7 @@
       <Expansion Priority="0">
         <Body>null</Body>
         <Context />
-        <ContextString>!([InAnyComment] || [InString])</ContextString>
+        <ContextString>![OnFirstLine] &amp;&amp; !([InAnyComment] || [InString])</ContextString>
       </Expansion>
       <Expansion Priority="1">
         <Body>null</Body>
@@ -23,6 +23,11 @@
         <Body>null</Body>
         <Context />
         <ContextString>([InFieldInitializer] &amp;&amp; [InParens])</ContextString>
+      </Expansion>
+      <Expansion Priority="0">
+        <Body>«:ns»</Body>
+        <Context />
+        <ContextString>[OnFirstLine]</ContextString>
       </Expansion>
     </Template>
   </TemplateCategory>
@@ -488,7 +493,7 @@
           <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InString])</ContextString>
         </Expansion>
       </Template>
-      <Template Name="m" CaseSensitiveName="false">
+      <Template Name="m_" CaseSensitiveName="false">
         <Comment>Method.</Comment>
         <Expansion Priority="0">
           <Body>«:m.»</Body>
@@ -1223,6 +1228,48 @@
     <TemplateCategory Name="Typecast Instances" />
     <TemplateCategory Name="Types">
       <TemplateCategory Name="System">
+        <Template Name="#Measure#">
+          <Expansion Priority="0">
+            <Body>[&lt;Measure&gt;]
+  type «:#TypeName#(TypeName=MyModule)»«FinalTarget»
+  </Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#RootModule#">
+          <Comment>«Namespace». does not work yet</Comment>
+          <Expansion Priority="0">
+            <Body>module «:#TypeName#(TypeName=MyModule)»</Body>
+            <Context />
+            <ContextString>[OnEmptyLine]</ContextString>
+          </Expansion>
+          <Expansion Priority="0">
+            <Body>module </Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#Module#">
+          <Expansion Priority="0">
+            <Body>module «:#TypeName#(TypeName=MyModule)» =</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#StructRecord#">
+          <Expansion Priority="0">
+            <Body>[&lt;Struct&gt;]
+  «:#Record#»</Body>
+            <Context />
+          </Expansion>
+        </Template>
+        <Template Name="#StructVerbose#">
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyStruct)» =
+      struct
+          «FinalTarget»
+      end«Marker»</Body>
+            <Context />
+          </Expansion>
+        </Template>
         <Template Name="#AddAbstractMember#" CaseSensitiveName="false">
           <Expansion Priority="0">
             <Body>
@@ -1239,14 +1286,12 @@
         </Template>
         <Template Name="#AddRecordField#" CaseSensitiveName="false">
           <Expansion Priority="0">
-            <Body>;
-  «BlockAnchor»«Field(NextField)»«Caret»: «Field(FieldType)»;«Target(#AddRecordField#)»</Body>
+            <Body>«NewLineIfNeeded»«BlockAnchor»«Field(NextField)»«Caret» : «Field(FieldType)»«Target(#AddRecordField#)»</Body>
             <Context />
             <ContextString>![Left Text Contains(;)]</ContextString>
           </Expansion>
           <Expansion Priority="1">
-            <Body>
-  «BlockAnchor»«Field(NextField)»«Caret» : «Field(FieldType)»;«Target(#AddRecordField#)»</Body>
+            <Body>«NewLineIfNeeded»«BlockAnchor»«Field(NextField)»«Caret» : «Field(FieldType)»;«Target(#AddRecordField#)»</Body>
             <Context />
             <ContextString>[Left Text Contains(;)]</ContextString>
           </Expansion>
@@ -1254,7 +1299,7 @@
         <Template Name="#AddUnionConstructor#" CaseSensitiveName="false">
           <Expansion Priority="0">
             <Body>
-     | «Field(Constructor,Enter constructor name)» of «Field(,Enter single parameter type or names with types)»«Target(#AddUnionConstructor#)»</Body>
+  | «Field(Constructor,Enter constructor name)» of «Field(,Enter single parameter type or names with types)»«Target(#AddUnionConstructor#)»</Body>
             <Context />
             <ContextString>![Left Text Contains(|)]</ContextString>
           </Expansion>
@@ -1290,12 +1335,12 @@
         </Template>
         <Template Name="#ClassDeclaration#" CaseSensitiveName="false">
           <Expansion Priority="0">
-            <Body>type «:#TypeName#(TypeName=MyClass)»(«FieldStart(,Enter any parameters)»«TextLink(parameters)»«FieldEnd») = «:#InheritsFrom#»</Body>
+            <Body>type «:#TypeName#(TypeName=MyClass)» («FieldStart(,Enter any parameters)»«TextLink(parameters)»«FieldEnd») = «:#InheritsFrom#»</Body>
             <Context />
             <ContextString>[VariableMatches(WithConstructor,true)]</ContextString>
           </Expansion>
           <Expansion Priority="1">
-            <Body>type «:#TypeName#»() = «:#InheritsFrom#»</Body>
+            <Body>type «:#TypeName#» () = «:#InheritsFrom#»</Body>
             <Context />
             <ContextString>![VariableMatches(WithConstructor,true)]</ContextString>
           </Expansion>
@@ -1311,7 +1356,7 @@
         <Template Name="#InheritsFrom#" CaseSensitiveName="false">
           <Expansion Priority="0">
             <Body>
-      inherit «?Get(Type)»(«Marker»«:#BaseConstructorParameters#»)«FinalTarget»</Body>
+      inherit «?Get(Type)» («Marker»«:#BaseConstructorParameters#»)«FinalTarget»</Body>
             <Context />
             <ContextString>[VariableMatches(HasAncestor,true)] &amp;&amp; !([IsSealedType(«?Get(Type.FullName)»)] || [IsValueType(«?Get(Type.FullName)»)])</ContextString>
           </Expansion>
@@ -1340,16 +1385,17 @@
         </Template>
         <Template Name="#Record#" CaseSensitiveName="false">
           <Expansion Priority="0">
-            <Body>type «:#TypeName#(TypeName=MyRecord)» = { «Field(NextField)» : «Field(,Enter field type)»«Target(#AddRecordField#)» }«Marker»</Body>
+            <Body>type «:#TypeName#(TypeName=MyRecord)» =
+      { «Field(NextField)» : «Field(,Enter field type)»«Target(#AddRecordField#)» }«Marker»</Body>
             <Context />
           </Expansion>
         </Template>
         <Template Name="#Struct#" CaseSensitiveName="false">
           <Expansion Priority="0">
-            <Body>type «:#TypeName#(TypeName=MyStruct)» =
-      struct
-          «FinalTarget»
-      end«Marker»</Body>
+            <Body>[&lt;Struct&gt;]
+  type «:#TypeName#(TypeName=MyStruct)» =
+    «FinalTarget»
+  </Body>
             <Context />
           </Expansion>
         </Template>
@@ -1373,16 +1419,74 @@
         </Template>
         <Template Name="#UnionSingleCase#" CaseSensitiveName="false">
           <Expansion Priority="1">
-            <Body>type «:#TypeName#(TypeName=MyUnion)» = «Link(«?Get(TypeName)»)» of «Field(,Enter type)»</Body>
+            <Body>type «:#TypeName#(TypeName=MyUnion)» = «Link(«?Get(TypeName)»)» of «Field(«?Get(Type)»,Enter type)»</Body>
             <Context />
+          </Expansion>
+          <Expansion Priority="0">
+            <Body>type «:#TypeName#(TypeName=MyUnion)» = «Link(«?Get(TypeName)»)» of «?Get(Type)»«FinalTarget»</Body>
+            <Context />
+            <ContextString>[VariableMatches(Type,true)]</ContextString>
           </Expansion>
         </Template>
       </TemplateCategory>
+      <Template Name="tm">
+        <Comment>Define unit of measure</Comment>
+        <Expansion Priority="0">
+          <Body>«:#Measure#»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+        </Expansion>
+      </Template>
+      <Template Name="u?Type?">
+        <Expansion Priority="0">
+          <Body>«:#UnionSingleCase#»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+        </Expansion>
+      </Template>
+      <Template Name="m">
+        <Comment>Define module</Comment>
+        <Expansion Priority="0">
+          <Body>«:#RootModule#»
+
+  «FinalTarget»</Body>
+          <Context />
+          <ContextString>[OnFirstLine] &amp;&amp; [OnLastLine]</ContextString>
+        </Expansion>
+        <Expansion Priority="0">
+          <Body>«:#RootModule#»</Body>
+          <Context />
+          <ContextString>[OnFirstLine] &amp;&amp; ![OnLastLine]</ContextString>
+        </Expansion>
+        <Expansion Priority="0">
+          <Body>«:#Module#»
+
+    «FinalTarget»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; ![OnFirstLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+        </Expansion>
+      </Template>
+      <Template Name="sr">
+        <Comment>Define struct record type</Comment>
+        <Expansion Priority="0">
+          <Body>«:#StructRecord#»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+        </Expansion>
+      </Template>
+      <Template Name="sv">
+        <Comment>Define struct type with verbose syntax</Comment>
+        <Expansion Priority="0">
+          <Body>«:#StructVerbose#»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+        </Expansion>
+      </Template>
       <Template Name="uc,">
         <Expansion Priority="0">
           <Body>| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret»«FinalTarget»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c" CaseSensitiveName="false">
@@ -1390,7 +1494,7 @@
         <Expansion Priority="0">
           <Body>«:#Class#(WithConstructor=true)»</Body>
           <Context />
-          <ContextString>!([DeclaresLocal(c)] || [InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([DeclaresLocal(c)] || [InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c-" CaseSensitiveName="false">
@@ -1398,6 +1502,7 @@
         <Expansion Priority="0">
           <Body>«:#Class#(WithConstructor=true,IsAbstract=true)»</Body>
           <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c," CaseSensitiveName="false">
@@ -1405,7 +1510,7 @@
         <Expansion Priority="0">
           <Body>«:#Class#»</Body>
           <Context />
-          <ContextString>!([DeclaresLocal(c)] || [InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([DeclaresLocal(c)] || [InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c,-" CaseSensitiveName="false">
@@ -1413,7 +1518,7 @@
         <Expansion Priority="0">
           <Body>«:#Class#(IsAbstract=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c-," CaseSensitiveName="false">
@@ -1421,42 +1526,42 @@
         <Expansion Priority="0">
           <Body>«:#Class#(IsAbstract=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c?Type?" CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Class#(WithConstructor=true,HasAncestor=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c?Type?-" CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Class#(WithConstructor=true,HasAncestor=true,IsAbstract=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c?Type?," CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Class#(HasAncestor=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c?Type?,-" CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Class#(HasAncestor=true,IsAbstract=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="c?Type?-," CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Class#(HasAncestor=true,IsAbstract=true)»</Body>
           <Context />
-          <ContextString>!([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="e" CaseSensitiveName="false">
@@ -1464,24 +1569,24 @@
         <Expansion Priority="0">
           <Body>«:#Enum#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="i" CaseSensitiveName="false">
         <Expansion Priority="0">
           <Body>«:#Interface#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="oe" CaseSensitiveName="false">
         <Comment>Object expression</Comment>
         <Expansion Priority="0">
           <Body>let «BlockAnchor»«Field(MyClass)»«Caret»«:#ObjectExpressonParameters#» =
-     {
-         new «Field(,Enter interface name)» with
-         «FinalTarget»
-     }</Body>
+      {
+          new «Field(,Enter interface name)» with
+          «FinalTarget»
+    }</Body>
           <Context />
         </Expansion>
       </Template>
@@ -1497,7 +1602,7 @@
         <Expansion Priority="0">
           <Body>«:#Record#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="s" CaseSensitiveName="false">
@@ -1505,7 +1610,7 @@
         <Expansion Priority="0">
           <Body>«:#Struct#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="t" CaseSensitiveName="false">
@@ -1513,6 +1618,7 @@
         <Expansion Priority="0">
           <Body>type «Field»«Caret» = «FinalTarget»</Body>
           <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="u" CaseSensitiveName="false">
@@ -1520,7 +1626,7 @@
         <Expansion Priority="0">
           <Body>«:#Union#(AddConstructors=true)»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="u," CaseSensitiveName="false">
@@ -1528,7 +1634,7 @@
         <Expansion Priority="0">
           <Body>«:#Union#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="u." CaseSensitiveName="false">
@@ -1536,7 +1642,7 @@
         <Expansion Priority="0">
           <Body>«:#UnionSingleCase#»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
       <Template Name="uc" CaseSensitiveName="false">
@@ -1544,7 +1650,7 @@
         <Expansion Priority="0">
           <Body>| «BlockAnchor»«Field(Constructor,Enter constructor name)»«Caret» of «Field(,Enter single parameter type or names with types)»«FinalTarget»</Body>
           <Context />
-          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface])</ContextString>
+          <ContextString>[OnEmptyLine] &amp;&amp; !([InAnyComment] || [InInterface] || [InMethod] || [InPreprocessorDirective] || [InProperty] || [InStruct])</ContextString>
         </Expansion>
       </Template>
     </TemplateCategory>
@@ -1560,6 +1666,17 @@
 
   «FinalTarget»</Body>
         <Context />
+        <ContextString>[OnLastLine]</ContextString>
+      </Expansion>
+      <Expansion Priority="0">
+        <Body>namespace «Field(,Enter namespace name)»«Caret»«FinalTarget»</Body>
+        <Context />
+        <ContextString>[OnEmptyLine]</ContextString>
+      </Expansion>
+      <Expansion Priority="0">
+        <Body>namespace </Body>
+        <Context />
+        <ContextString>![OnEmptyLine]</ContextString>
       </Expansion>
     </Template>
   </TemplateCategory>
@@ -1597,6 +1714,28 @@
   </TemplateCategory>
   <TemplateCategory Name="Program Blocks">
     <TemplateCategory Name="try...">
+      <Template Name="twf?">
+        <Expansion Priority="0">
+          <Body>try try
+          «Cursor»«Marker»
+      with
+      | :? Exception as ex -&gt; «Marker»
+  finally
+      «Marker»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; ![InPreprocessorDirective]</ContextString>
+        </Expansion>
+      </Template>
+      <Template Name="tw?">
+        <Expansion Priority="0">
+          <Body>try
+      «Cursor»«Marker»
+  with
+  | :? Exception as ex -&gt; «Marker»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine] &amp;&amp; ![InPreprocessorDirective]</ContextString>
+        </Expansion>
+      </Template>
       <Template Name="tcf">
         <Expansion Priority="0">
           <Body>«:twf»</Body>
@@ -1608,8 +1747,7 @@
         <Expansion Priority="0">
           <Body>try try
           «Cursor»«Marker»
-      with
-      | :? Exception as ex -&gt;«Marker»
+      with ex -&gt; «Marker»
   finally
       «Marker»</Body>
           <Context />
@@ -1637,8 +1775,7 @@
         <Expansion Priority="0">
           <Body>try
       «Cursor»«Marker»
-  with
-  | :? Exception as ex -&gt;«Marker»</Body>
+  with ex -&gt; «Marker»</Body>
           <Context />
           <ContextString>[OnEmptyLine] &amp;&amp; ![InPreprocessorDirective]</ContextString>
         </Expansion>
@@ -1690,6 +1827,12 @@
     </TemplateCategory>
     <TemplateCategory Name="Flow">
       <TemplateCategory Name="System">
+        <Template Name="#matchbang_definition#">
+          <Expansion Priority="0">
+            <Body>match! «Caret»«Field(parameter)»«BlockAnchor» with</Body>
+            <Context />
+          </Expansion>
+        </Template>
         <Template Name="#DefaultForEach#" CaseSensitiveName="false">
           <Expansion Priority="0">
             <Body>for «SoftCaret»«Field(item,Variable name)»«SoftAnchor» in «:#ExpressionFromClipboard#» do «FinalTarget»</Body>
@@ -1793,7 +1936,98 @@
           </Expansion>
         </Template>
       </TemplateCategory>
+      <Template Name="match?">
+        <Comment>Match with cast</Comment>
+        <Expansion Priority="0">
+          <Body>«:#match_definition#»
+  | :? «Field» -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchcb!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  | :? «FieldStart»«Link(TypeName)»«FieldEnd» as «FieldStart»«Link(typeName)»«FieldEnd» -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchc!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  «?Set(CaseExpression,«Field(Expression)»)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="match?!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  | :? «Field» -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchtf!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  | true -&gt; «Field»
+  | false -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchvo!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  «?Set(CaseExpression,ValueSome «Field(identifier)»)»«:#match_case#»
+  «?Set(CaseExpression,ValueNone)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchtry!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  | true, value -&gt; «Field»
+  | false, _ -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matcht!">
+        <Expansion Priority="0">
+          <Body>«:matchtry!»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchr!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  «?Set(CaseExpression,Ok «Field(identifier)»)»«:#match_case#»
+  «?Set(CaseExpression,Error «Field(identifier)»)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matcho!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  «?Set(CaseExpression,Some «Field(identifier)»)»«:#match_case#»
+  «?Set(CaseExpression,None)»«:#match_case#»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="match!">
+        <Expansion Priority="0">
+          <Body>«:#matchbang_definition#»
+  | «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
+      <Template Name="matchtf">
+        <Expansion Priority="0">
+          <Body>«:#match_definition#»
+  | true -&gt; «Field»
+  | false -&gt; «FinalTarget»</Body>
+          <Context />
+        </Expansion>
+      </Template>
       <Template Name="matchr">
+        <Comment>Match result type</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   «?Set(CaseExpression,Ok «Field(identifier)»)»«:#match_case#»
@@ -1802,18 +2036,21 @@
         </Expansion>
       </Template>
       <Template Name="raise">
+        <Comment>Raise with backward pipe</Comment>
         <Expansion Priority="0">
           <Body>«:raise&lt;»</Body>
           <Context />
         </Expansion>
       </Template>
       <Template Name="raise(">
+        <Comment>Raise with parenthes</Comment>
         <Expansion Priority="0">
           <Body>raise («BlockAnchor»«Field(,Enter exception object name or create new)»«Caret»)«FinalTarget»</Body>
           <Context />
         </Expansion>
       </Template>
       <Template Name="matchvo">
+        <Comment>Match against value option type</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   «?Set(CaseExpression,ValueSome «Field(identifier)»)»«:#match_case#»
@@ -1829,21 +2066,15 @@
           <Context />
         </Expansion>
       </Template>
-      <Template Name="match?">
-        <Comment>Match with cast</Comment>
-        <Expansion Priority="0">
-          <Body>«:#match_definition#»
-  | :? «Field» -&gt; «FinalTarget»</Body>
-          <Context />
-        </Expansion>
-      </Template>
       <Template Name="matcht">
+        <Comment>Match TryGet method with out variable</Comment>
         <Expansion Priority="0">
           <Body>«:matchtry»</Body>
           <Context />
         </Expansion>
       </Template>
       <Template Name="matchtry">
+        <Comment>Match TryGet method with out variable</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   | true, value -&gt; «Field»
@@ -1880,6 +2111,7 @@
         </Expansion>
       </Template>
       <Template Name="matchn">
+        <Comment>Match against null</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   | null -&gt; «Field»
@@ -1957,6 +2189,7 @@
         </Expansion>
       </Template>
       <Template Name="match" CaseSensitiveName="false">
+        <Comment>Empty match</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   | «FinalTarget»</Body>
@@ -1972,7 +2205,7 @@
         </Expansion>
       </Template>
       <Template Name="matcho" CaseSensitiveName="false">
-        <Comment>match against option type</Comment>
+        <Comment>Match against option type</Comment>
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   «?Set(CaseExpression,Some «Field(identifier)»)»«:#match_case#»
@@ -1981,12 +2214,14 @@
         </Expansion>
       </Template>
       <Template Name="raise&lt;" CaseSensitiveName="false">
+        <Comment>Raise with backward pipe</Comment>
         <Expansion Priority="0">
           <Body>raise &lt;| «BlockAnchor»«Field(,Enter exception object name or create new)»«Caret»«FinalTarget»</Body>
           <Context />
         </Expansion>
       </Template>
       <Template Name="rn" CaseSensitiveName="false">
+        <Comment>Raise with backward pipe</Comment>
         <Expansion Priority="0">
           <Body>«:raise»</Body>
           <Context />
