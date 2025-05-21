@@ -82,7 +82,7 @@
     </Template>
     <Template Name="[&lt;cn">
       <Expansion Priority="0">
-        <Body>[&lt;CompiledName("«Caret»")</Body>
+        <Body>[&lt;CompiledName "«Caret»"</Body>
         <Context />
         <ContextString>!([InAnyComment] || [InString])</ContextString>
       </Expansion>
@@ -158,14 +158,33 @@
           </Expansion>
         </Template>
       </TemplateCategory>
+      <Template Name="lsb">
+        <Comment>let StringBuilder binding</Comment>
+        <Expansion Priority="0">
+          <Body>«:#StaticIfNeeded#»let sb = StringBuilder («Field»)«FinalTarget»</Body>
+          <Context />
+          <ContextString>[OnEmptyLine]</ContextString>
+          <UsingClause>System.Text</UsingClause>
+        </Expansion>
+      </Template>
+      <Template Name="lm">
+        <Comment>let mutable binding</Comment>
+        <Expansion Priority="0">
+          <Body>«:mut»</Body>
+          <Context />
+        </Expansion>
+      </Template>
       <Template Name="lct">
+        <Comment>let CancellationToken binding</Comment>
         <Expansion Priority="0">
           <Body>«:#StaticIfNeeded#»let! ct = Async.CancellationToken«FinalTarget»</Body>
           <Context />
           <ContextString>[OnEmptyLine]</ContextString>
+          <UsingClause>System.Threading.Tasks</UsingClause>
         </Expansion>
       </Template>
       <Template Name="l!">
+        <Comment>let bang binding</Comment>
         <Expansion Priority="0">
           <Body>«:let!»</Body>
           <Context />
@@ -179,6 +198,7 @@
         </Expansion>
       </Template>
       <Template Name="ll">
+        <Comment>let literal binding</Comment>
         <Expansion Priority="0">
           <Body>«:#StaticIfNeeded#»let [&lt;Literal&gt;] «BlockAnchor»«Field(name)»«Caret» = «FinalTarget»</Body>
           <Context />
@@ -207,6 +227,7 @@
         </Expansion>
       </Template>
       <Template Name="lr" CaseSensitiveName="false">
+        <Comment>Record creation let binding</Comment>
         <Expansion Priority="0">
           <Body>«:#BindRecord#»</Body>
           <Context />
@@ -214,12 +235,14 @@
         </Expansion>
       </Template>
       <Template Name="lu" CaseSensitiveName="false">
+        <Comment>Union case creation let binding</Comment>
         <Expansion Priority="0">
           <Body>«:#BindUnion#»</Body>
           <Context />
         </Expansion>
       </Template>
       <Template Name="mut" CaseSensitiveName="false">
+        <Comment>let mutable binding</Comment>
         <Expansion Priority="0">
           <Body>«:#StaticIfNeeded#»let mutable «BlockAnchor»«Field(name)»«Caret» = «FinalTarget»</Body>
           <Context />
@@ -1655,12 +1678,14 @@
       </Template>
     </TemplateCategory>
     <Template Name="fun" CaseSensitiveName="false">
+      <Comment>Lambda expression</Comment>
       <Expansion Priority="0">
         <Body>fun «Field»«Caret» -&gt; «FinalTarget»</Body>
         <Context />
       </Expansion>
     </Template>
     <Template Name="ns" CaseSensitiveName="false">
+      <Comment>Namespace</Comment>
       <Expansion Priority="0">
         <Body>namespace «Field(,Enter namespace name)»«Caret»
 
@@ -2115,7 +2140,7 @@
         <Expansion Priority="0">
           <Body>«:#match_definition#»
   | null -&gt; «Field»
-  | _ -&gt; «FinalTarget»</Body>
+  | «FieldStart»«Link(parameter)»«FieldEnd» -&gt; «FinalTarget»</Body>
           <Context />
         </Expansion>
       </Template>
